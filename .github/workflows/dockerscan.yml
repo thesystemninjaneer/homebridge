@@ -11,11 +11,11 @@ jobs:
       run: |
         docker run -d --name db arminc/clair-db:latest
         docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:latest
-        ifconfig docker0 | grep inet
-        ip link show
+        DOCKERHOST=$(ifconfig docker0 | grep inet | cut -d' ' -f2)
+        echo $DOCKERHOST
         docker pull oznu/homebridge:latest
         touch clair-whitelist.yml
-        ./clair-scanner -c http://172.0.0.1:6060 \
+        ./clair-scanner -c http://$DOCKERHIST:6060 \
                         --ip $(hostname -i) \
                         -r gl-container-scanning-report-homebridge.json \
                         -l clair.log \
