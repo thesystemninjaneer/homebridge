@@ -13,7 +13,7 @@ jobs:
         docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:latest
         docker pull oznu/homebridge:latest
         touch clair-whitelist.yml
-        ./clair-scanner -c http://docker:6060 \
+        ./clair-scanner -c tcp://localhost:6060 \
                         --ip $(hostname -i) \
                         -r gl-container-scanning-report-homebridge.json \
                         -l clair.log \
