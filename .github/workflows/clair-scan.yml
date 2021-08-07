@@ -1,4 +1,4 @@
-name: Docker Scan 
+name: Clair container Scan 
 
 on: [push]
 
