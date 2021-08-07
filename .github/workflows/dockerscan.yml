@@ -11,6 +11,8 @@ jobs:
       run: |
         docker run -d --name db arminc/clair-db:latest
         docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:latest
+        ifconfig docker0 | grep inet && true
+        ip link show | grep inet && true
         docker pull oznu/homebridge:latest
         touch clair-whitelist.yml
         ./clair-scanner -c http://172.0.0.1:6060 \
